@@ -42,8 +42,8 @@ function processData(input) {
           lastColumn = -1;
           break;
         }
-        //console.log('baseRow: %d, highRow: %d, lastColumn: %d, column: %d, perimeter: %d, maxP: %d',
-        //  baseRow, highRow, lastColumn, column, perimeter, maxPerimeter);
+        console.log('baseRow: %d, highRow: %d, lastColumn: %d, column: %d, perimeter: %d, maxP: %d',
+          baseRow, highRow, lastColumn, column, perimeter, maxPerimeter);
       }
     }
 
