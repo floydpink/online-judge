@@ -31,32 +31,32 @@ function processData(input) {
   }
 
   // set up the remaining rows and columns on up array relative to the top-left corner
-  for (var r = 1; r < m; r++) {
-    for (var s = 0; s < n; s++) {
-      if (land[r][s] === '.') {
-        up[r][s] = up[r - 1][s] + 1;
+  for (var e = 1; e < m; e++) {
+    for (var f = 0; f < n; f++) {
+      if (land[e][f] === '.') {
+        up[e][f] = up[e - 1][f] + 1;
       } else {
-        up[r][s] = -1;
+        up[e][f] = -1;
       }
     }
   }
 
   var maxPerimeter = -1;
-  for (var r1 = 0; r1 < n; r1++) {
-    for (var r2 = r1 + 1; r2 < n; r2++) {
-      var vectorArray = [], rDiff = r2 - r1;
-      for (var z = 0; z < m; z++) {
-        if (up[r2][z] >= rDiff) {
-          vectorArray.push(z);
+  for (var leftEdge = 0; leftEdge < n; leftEdge++) {
+    for (var rightEdge = leftEdge + 1; rightEdge < n; rightEdge++) {
+      var vectorArray = [], slidingWidth = rightEdge - leftEdge;
+      for (var bottomEdge = 0; bottomEdge < m; bottomEdge++) {
+        if (up[bottomEdge][rightEdge] >= slidingWidth) {
+          vectorArray.push(bottomEdge);
         }
         var l = 0, r;
         for (r = 0; r < vectorArray.length; r++) {
-          var minLeft = vectorArray[r] - Math.min(left[r1][vectorArray[r]], left[r2][vectorArray[r]]);
+          var minLeft = vectorArray[r] - Math.min(left[vectorArray[r][leftEdge]], left[vectorArray[r][rightEdge]]);
           while (vectorArray[l] < minLeft) {
             l++;
           }
           if (vectorArray[r] > vectorArray[l]) {
-            maxPerimeter = Math.max(maxPerimeter, 2 * rDiff + 2 * (vectorArray[r] - vectorArray[l]));
+            maxPerimeter = Math.max(maxPerimeter, 2 * slidingWidth + 2 * (vectorArray[r] - vectorArray[l]));
           }
         }
       }
