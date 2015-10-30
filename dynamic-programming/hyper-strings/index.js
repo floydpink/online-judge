@@ -1,78 +1,82 @@
 function processData(input) {
-  var inputLines = input.split('\n'), metadata = inputLines[0].split(' ');
-  var superStringsCount = +metadata[0], maxHyperStringLength = +metadata[1], index = 0, superStrings = [], counter = superStringsCount;
+  var lines = input.split('\n'), metadata = lines[0].split(' ');
+  var n = +metadata[0], m = +metadata[1], index = 0, superstrings = [], counter = n;
   while (counter) {
-    superStrings.push(inputLines[++index]);
+    superstrings.push(lines[++index]);
     counter--;
   }
 
-  // Another approach - using a table that gets built
-  var count = function (superStrings, hyperStringLength, superStringIndex) {
+  console.log(n + ' ' + m);
+  console.log(superstrings);
 
-    var i, j, x, y;
+  var MOD = 1000000007;
+  var dp = new Array(m + 1);
+  var state = new Array(m + 1);
 
-    // Table - we would need n+1 rows to include 0 and the n cases
-    //**
-    // The 2-dimension buffer will contain answers to this question:
-    // "how much permutations are there for hyperString of length of `i` characters with the `j`th
-    // superString?" eg. `table[10][2]` will tell us how many permutations
-    // there are when giving back 10 characters using only the first 2 super strings
-    // [ 1, 2 ].
-    var table = new Array(hyperStringLength + 1);
-    for (i = 0; i <= hyperStringLength; i++) {
-      table[i] = new Array(superStrings.length);
+  for (var i = 0; i < m; i++) {
+    dp[i] = new Array(1 << 10);
+    state[i] = new Array(1 << 10);
+  }
+
+  for (i = 0; i < m; i++) {
+    for (var j = 0; j < dp[i].length; j++) {
+      dp[i][j] = 0;
+      state[i][j] = -1;
     }
+  }
 
-    // Fill entries for 0 value (base case)
-    //**
-    // For all the cases where we need to give back a 0 char string (empty string), there's exactly
-    // 1 permutation: the empty set. Note that buffer[0][0] won't ever be
-    // needed.
-    for (i = 0; i <= hyperStringLength; i++) {
-      table[0][i] = 1;
-    }
+  dp[0][0] = 1;
+  state[0][0] = 1;
 
-    // Fill the rest of the entries in the bottom-up manner
-    //**
-    // We process each case: 1 cent, 2 cent, etc. up to `n` cents, included.
-    for (i = 1; i <= hyperStringLength; i++) {
+  for (i = 0; i < m; i++) {
+    for (j = 0; j < dp[i].length; j++) {
+      if (state[i][j] >= 0) {
+        state[i][j] = 1;
+        for (var k = 0; k < superstrings.length; k++) {
+          var s = superstrings[k];
+          if (i + s.length > m) {
+            continue;
+          }
 
-      // No more superStrings? No permutation is possible to attain `i` characters.
-      table[i][0] = 0;
+          var charCodeForA = 'a'.charCodeAt(0);
+          var min = s.charCodeAt(0) - charCodeForA;
+          var max = 9;
+          for (; max >= 0; max--) {
+            if (((1 << max) & j) !== 0) {
+              break;
+            }
+            var newState = 0;
+            for (var l = 0; l < s.length; l++) {
+              newState += (1 << (s.charCodeAt(l) - charCodeForA))
+            }
 
-      //**
-      // Now we consider the cases when we have J super strings available.
-      for (j = 1; j <= superStrings.length; ++j) {
-
-        // First, we take into account all the known permutations possible
-        // _without_ using the J-th super-string (actually computed at the previous
-        // loop step).
-        var value = table[i][j - 1];
-
-        // Then, we add all the permutations possible by consuming the J-th
-        // super-string itself, if we can.
-        if (superStrings[j - 1].length <= i)
-          value += table[i - superStrings[j - 1].length][j];
-
-        // We now know the answer for this specific case.
-        table[i][j] = value;
+            var dpSuffix = i + s.length - 1;
+            if (min > max) {
+              newState += j;
+              dp[dpSuffix][newState] = dp[i][j];
+              state[dpSuffix][newState] = 1;
+            } else {
+              if (state[dpSuffix][newState] !== 1) {
+                // (i + s.Length) + " " + newState + " " + min + " " + max + " AAA");
+                dp[dpSuffix][newState] = (dp[dpSuffix][newState] + dp[i][j]) % MOD;
+                state[dpSuffix][newState] = 0;
+              }
+            }
+          }
+        }
       }
     }
+  }
 
-    console.log(table);
-
-    //**
-    // Return the bottom-right answer, the one we were looking for in the
-    // first place.
-    return table[hyperStringLength][superStringsCount];
-  };
-
-  console.log(superStringsCount + ' ' + maxHyperStringLength);
-  console.log(superStrings);
-
-  var solutionsCount = count(superStrings, maxHyperStringLength);
-
-  console.log(solutionsCount);
+  var result = 0;
+  for (i = 0; i < m; i++) {
+    for (j = 0; j < dp[i].length; j++) {
+      if (state[i][j] === 1) {
+        result = (result + dp[i][j]) % MOD;
+      }
+    }
+    console.log(result);
+  }
 }
 
 var _input = "";
