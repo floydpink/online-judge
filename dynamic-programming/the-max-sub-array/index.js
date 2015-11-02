@@ -1,27 +1,33 @@
 function countSums(array) {
-  var maxContiguousSum = -Infinity, contiguousSum = 0, nonContiguousSum = 0;
+  var maxContiguousSum = -Infinity, maxNonContiguousSum = -Infinity, contiguousSum = 0, nonContiguousSum = 0;
 
   for (var i = 0; i < array.length; i++) {
     var number = array[i];
 
     // Contiguous
-    if (number > 0) {
-      contiguousSum += number;
-    } else {
-      contiguousSum = 0;
+    contiguousSum += number;
+    if (number > contiguousSum) {
+      contiguousSum = number
     }
 
     // Non-Contiguous
-    if (number > 0) {
+    if (number > 0 || maxContiguousSum < number) {
       nonContiguousSum += number;
     }
+    if (number > nonContiguousSum) {
+      nonContiguousSum = number;
+    }
 
+    // collect maximums
     if (contiguousSum > maxContiguousSum) {
       maxContiguousSum = contiguousSum;
     }
+    if (nonContiguousSum > maxNonContiguousSum) {
+      maxNonContiguousSum = nonContiguousSum;
+    }
   }
 
-  return {contiguous : maxContiguousSum, nonContiguous : nonContiguousSum};
+  return {contiguous : maxContiguousSum, nonContiguous : maxNonContiguousSum};
 }
 
 function processData(input) {
