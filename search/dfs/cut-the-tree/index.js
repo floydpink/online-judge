@@ -1,152 +1,76 @@
-var Node = function (key, value) {
-  this.key = key;
-  this.value = value;
-  this.adjacents = [];
-  this.visited = false;
-};
-
-var Edge = function (start, end) {
-  this.start = start;
-  this.end = end;
-};
-
-var Tree = function () {
-  this.nodes = {};
-  this.totalSum = 0;
-};
-
-// do something on all the nodes of the tree
-Tree.prototype.onAllNodes = function (callback) {
-  var keys = Object.keys(this.nodes);
-  keys.forEach(function (key) {callback(this.nodes[key]);}, this);
-};
-
-Tree.prototype.addNode = function (n) {
-  var node = new Node(n.key, n.value);
-  if (this.nodes[node.key] === undefined) {
-    this.nodes[node.key] = node;
-    this.totalSum += node.value;
-  } else {
-    throw new Error('Cannot add an existing node.');
+function dfs(graph, start, nodes) {
+  var stack = [];
+  var visited = [];
+  var node;
+  var tree1Sum = 0;
+  stack.push(start);
+  visited[start] = true;
+  while (stack.length) {
+    node = stack.pop();
+    tree1Sum += nodes[node];
+    for (var i = 1; i < graph[node].length; i += 1) {
+      // console.log('?>', node, i);
+      if (graph[node][i] && !visited[i]) {
+        stack.push(i);
+        visited[i] = true;
+      }
+    }
   }
-};
+  // console.log(visited, nodes, tree1Sum);
+  return tree1Sum;
+}
 
-Tree.prototype.addEdge = function (e) {
-  var start = this.nodes[e.start], end = this.nodes[e.end];
-  start.adjacents.push(end);
-  end.adjacents.push(start);
-};
+function getTreeDiffForEdge(graph, edge, nodes, totalSum) {
+  // console.log('\nedge', edge);
+  // cut the edge
+  graph[edge.start][edge.end] = 0;
+  graph[edge.end][edge.start] = 0;
 
-Tree.prototype.removeEdge = function (e) {
-  var start = this.nodes[e.start], end = this.nodes[e.end];
-  start.adjacents.splice(start.adjacents.indexOf(end), 1);
-  end.adjacents.splice(end.adjacents.indexOf(start), 1);
-};
+  var tree1Sum = dfs(graph, edge.start, nodes);
 
-Tree.prototype.getEdges = function () {
-  var edges = [];
-  this.onAllNodes(function (node) {
-    node.adjacents.forEach(function (a) {
-      edges.push(new Edge(node.key, a.key));
-    });
-  });
-  return edges;
-};
+  // reinstate the edge
+  graph[edge.start][edge.end] = 1;
+  graph[edge.end][edge.start] = 1;
 
-Tree.prototype.resetVertices = function () {
-  this.onAllNodes(function (node) {
-    node.visited = false;
-  });
-};
-
-Tree.prototype.getTreeDiffForEdge = function (edge) {
-  // console.log('Tree Sum Diff for Edge %d - %d', edge.start, edge.end);
-  // Remove Edge
-  this.removeEdge(edge);
-
-  // Calculate TreeDiff using a BFS
-  var queue = [], startNode = this.nodes[edge.start], treeSum = 0;
-  // set visited to false on all nodes
-  this.resetVertices();
-  startNode.visited = true;
-  queue.push(startNode);
-  while (queue.length) {
-    // console.log('..>', queue, queue.length);
-    var node = queue.shift();
-    node.visited = true;
-    treeSum += node.value;
-    node.adjacents.forEach(function (a) {
-      if (!a.visited) queue.push(a);
-    });
-  }
-
-  //var connectedNodes = [], connectedNodesSum = 0;
-  //var disconnectedNodes = [], disconnectedNodesSum = 0;
-  //this.onAllNodes(function (node) {
-  //  if (!node.visited) {
-  //    disconnectedNodes.push(node);
-  //    disconnectedNodesSum += node.value;
-  //  } else {
-  //    connectedNodes.push(node);
-  //    connectedNodesSum += node.value;
-  //  }
-  //});
-  //
-  //console.log('\nTree Sum:', treeSum);
-  //console.log('Connected Nodes:');
-  //console.log(connectedNodes.map(function (d) { return d.key + ' : ' + d.value; }).join('\n'));
-  //console.log('Disconnected Nodes:');
-  //console.log(disconnectedNodes.map(function (d) { return d.key + ' : ' + d.value; }).join('\n'));
-  //
-  // Add the edge back
-  this.addEdge(edge);
-
-  //console.log('Sum:', treeSum, ' Total Sum:', this.totalSum);
-  return Math.abs(this.totalSum - treeSum - treeSum);
-
-  //return Math.abs(disconnectedNodesSum - connectedNodesSum);
-};
-
-Tree.prototype.printTreeEdges = function () {
-  console.log(this.getEdges().map(function (e) {
-    return e.start + ' - ' + e.end;
-  }).join('\n'));
-};
+  return Math.abs(totalSum - tree1Sum - tree1Sum);
+}
 
 function processData(input) {
   var lines = input.split('\n'), n = +lines[0], index = 2;
   // create a new tree
-  var t = new Tree();
+  var tree = [[0]] /*new Array(n)*/, nodes = {}, edges = [], totalSum = 0;
   // add the vertices
-  lines[1].split(' ').forEach(function (e, i) { t.addNode({key : i + 1, value : +e}); });
+  //for (var i = 0; i < tree.length; i++) {
+  //  tree[i] = Array.apply(null, Array(n)).map(Number.prototype.valueOf, 0);
+  //}
+  lines[1].split(' ').forEach(function (e, i) {
+    nodes[i + 1] = +e;
+    totalSum += +e;
+    tree[i + 1] = Array.apply(null, Array(n + 1)).map(Number.prototype.valueOf, 0);
+  });
+
   // add the edges
   while (index < n + 1) {
-    var edgePair = lines[index].split(' ');
-    var edge = new Edge(+edgePair[0], +edgePair[1]);
-    t.addEdge(edge);
+    var edgePair = lines[index].split(' '), start = +edgePair[0], end = +edgePair[1];
+    tree[start][end] = 1;
+    tree[end][start] = 1;
+    edges.push({start : start, end : end});
     index++;
   }
 
-  // console.log(n, t);
-  //t.onAllNodes(function (nd) {
-  //  console.log(nd.key, nd.value, nd.adjacents.map(function (a) {return a.key}));
-  //});
+  //console.log(tree);
+  //console.log(nodes);
+  //console.log(edges);
 
-  //t.printTreeEdges();
-  //
-  //console.log(t.getTreeDiffForEdge(new Edge(2, 5)));
-  //
-  //t.printTreeEdges();
-  //
   var minimumTreeSumDiff = Infinity;
-  var edges = t.getEdges().slice();
-  // console.log(edges);
+
   edges.forEach(function (e) {
-    var treeSumDiff = t.getTreeDiffForEdge(e);
+    var treeSumDiff = getTreeDiffForEdge(tree, e, nodes, totalSum);
     // console.log('..>', treeSumDiff);
     if (treeSumDiff < minimumTreeSumDiff) {
       minimumTreeSumDiff = treeSumDiff;
     }
+
   });
 
   console.log(minimumTreeSumDiff);
