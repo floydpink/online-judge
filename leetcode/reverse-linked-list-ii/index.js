@@ -14,32 +14,38 @@
  * @return {ListNode}
  */
 var reverseBetween = function (head, m, n) {
-  var start = head, reversed = [], beforeStart = null;
+  m = m - 1;
+  n = n - 1;
+  if (!head || m > n || m < 0) {
+    return null;
+  }
 
-  for (var i = 1; i < m - 1; i++) {
+  var start = head, end, beforeStart, afterEnd, i, reversed = [];
+
+  for (i = 0; i < m; i++) {
     beforeStart = start;
     start = start.next;
   }
 
-  var end = start.next;
-
-  for (var j = m - 1; j < n; j++) {
-    reversed.push(end);
+  end = start;
+  afterEnd = end.next;
+  reversed.push(end);
+  for (i = 0; i <= n - m - 1; i++) {
     end = end.next;
+    afterEnd = end ? end.next : null;
+    reversed.push(end);
   }
 
-  //if (!beforeStart) {
-  //  var temp = reversed.pop();
-  //  temp.next = start;
-  //  start = head = temp;
-  //}
-  //
-  while (reversed.length > 0) {
-    start.next = reversed.pop();
-    start = start.next;
+  while (reversed.length) {
+    var temp = reversed.pop();
+    if (!beforeStart) {
+      head = beforeStart = temp;
+    } else {
+      beforeStart.next = temp;
+      beforeStart = beforeStart.next;
+    }
   }
-
-  start.next = end;
+  beforeStart.next = afterEnd;
 
   return head;
 };
@@ -62,4 +68,5 @@ function initializeList(array) {
 console.log(JSON.stringify(reverseBetween(initializeList([1, 2, 3, 4, 5]), 2, 4)));
 console.log(JSON.stringify(reverseBetween(initializeList([1, 2, 3, 4, 5]), 2, 5)));
 console.log(JSON.stringify(reverseBetween(initializeList([1, 2, 3, 4, 5]), 1, 2)));
-// console.log(JSON.stringify(reverseBetween(initializeList([3, 5]), 1, 2)));
+console.log(JSON.stringify(reverseBetween(initializeList([3, 5]), 1, 2)));
+console.log(JSON.stringify(reverseBetween(initializeList([3]), 1, 1)));
