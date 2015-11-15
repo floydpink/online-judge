@@ -14,40 +14,40 @@
  * @return {ListNode}
  */
 var reverseBetween = function (head, m, n) {
-  m = m - 1;
-  n = n - 1;
-  if (!head || m > n || m < 0) {
-    return null;
+  if (head === null || head.next === null || m === n) {
+    return head;
   }
 
-  var start = head, end, beforeStart, afterEnd, i, reversed = [];
+  var prev, curr, next, pos;
+  prev = m === 1 ? head : null;
+  curr = head;
+  next = head.next;
+  pos = 1;
 
-  for (i = 0; i < m; i++) {
-    beforeStart = start;
-    start = start.next;
-  }
-
-  end = start;
-  afterEnd = end.next;
-  reversed.push(end);
-  for (i = 0; i <= n - m - 1; i++) {
-    end = end.next;
-    afterEnd = end ? end.next : null;
-    reversed.push(end);
-  }
-
-  while (reversed.length) {
-    var temp = reversed.pop();
-    if (!beforeStart) {
-      head = beforeStart = temp;
+  while (curr !== null) {
+    if (pos < m) {
+      prev = curr;
+      curr = next;
+      next = next.next;
+    } else if (pos >= m && pos < n) {
+      var temp = next.next;
+      next.next = curr;
+      curr = next;
+      next = temp;
     } else {
-      beforeStart.next = temp;
-      beforeStart = beforeStart.next;
+      break;
     }
+    pos++;
   }
-  beforeStart.next = afterEnd;
 
-  return head;
+  if (m === 1) {
+    prev.next = next;
+    return curr;
+  } else {
+    prev.next.next = next;
+    prev.next = curr;
+    return head;
+  }
 };
 
 function ListNode(val) {
