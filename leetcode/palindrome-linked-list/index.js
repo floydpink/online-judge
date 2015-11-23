@@ -11,17 +11,24 @@
  */
 var isPalindrome = function (head) {
   if (head === null) return true;
-  var reversed = [], current = head;
-  while (current !== null) {
-    reversed.push(current.val);
-    current = current.next;
+  var fast = head, slow = head, rev = null;
+  while (fast && fast.next !== null) {
+    fast = fast.next.next;
+    var temp = rev;
+    rev = slow;
+    rev.next = temp;
+    slow = slow.next;
   }
-  current = head;
-  while (reversed.length) {
-    if (current.val !== reversed.pop()) return false;
-    current = current.next;
+  if (fast) {
+    slow = slow.next;
   }
-  return true;
+
+  while (rev && rev.val === slow.val) {
+    slow = slow.next;
+    rev = rev.next;
+  }
+
+  return rev === null;
 };
 
 function ListNode(val) {
@@ -40,3 +47,4 @@ function initializeList(array) {
 }
 
 console.log(isPalindrome(initializeList([])));
+console.log(isPalindrome(initializeList([1,2,1,1,2,1])));
