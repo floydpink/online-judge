@@ -3,23 +3,7 @@
  * @return {boolean}
  */
 var isPalindrome = function (x) {
-  if (x < 0) {
-    return false;
-  }
-  var div = 1;
-  while (Math.floor(x / div) >= 10) {
-    div *= 10;
-  }
-  while (x >= 10) {
-    var left = Math.floor(x / div);
-    var right = x % 10;
-    if (left !== right) {
-      return false;
-    }
-    x = Math.floor((x % div) / 10);
-    div /= 100;
-  }
-  return div <= 10 || x === 0;
+  return x.toString() === x.toString().split('').reverse().join('');
 };
 
 console.log(isPalindrome(1000030001) === false);
