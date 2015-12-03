@@ -6,6 +6,22 @@ var isPalindrome = function (x) {
   return x.toString() === x.toString().split('').reverse().join('');
 };
 
+//public boolean isPalindrome(int x) {
+//
+//    if (x < 0) return false;
+//
+//    int p = x;
+//    int q = 0;
+//
+//    while (p >= 10){
+//        q *=10;
+//        q += p%10;
+//        p /=10;
+//    }
+//
+//    return q == x / 10 && p == x % 10;
+//}
+
 console.log(isPalindrome(1000030001) === false);
 console.log(isPalindrome(0) === true);
 console.log(isPalindrome(-23) === false);

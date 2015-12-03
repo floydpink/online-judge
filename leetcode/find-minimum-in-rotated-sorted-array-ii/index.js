@@ -16,7 +16,7 @@ var findMinBinarySearch = function (arr, low, high) {
   }
 
   if (arr[low] === arr[mid] && arr[high] && arr[mid]) {
-    return Math.min(findMinBinarySearch(arr, low, mid - 1), findMinBinarySearch(arr, mid + 1, high))
+    return Math.min(findMinBinarySearch(arr, low, mid - 1), findMinBinarySearch(arr, mid + 1, high));
   }
 
   if (mid > low && arr[mid - 1] > arr[mid]) {

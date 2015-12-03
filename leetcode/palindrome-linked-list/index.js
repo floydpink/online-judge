@@ -31,6 +31,33 @@ var isPalindrome = function (head) {
   return rev === null;
 };
 
+// ****** ORIGINAL BELOW (O(1) space above) *******
+///**
+// * Definition for singly-linked list.
+// * function ListNode(val) {
+// *     this.val = val;
+// *     this.next = null;
+// * }
+// */
+///**
+// * @param {ListNode} head
+// * @return {boolean}
+// */
+//var isPalindrome = function(head) {
+//    if (head === null) return true;
+//    var reversed = [], current = head;
+//    while (current !== null) {
+//        reversed.push(current.val);
+//        current = current.next;
+//    }
+//    current = head;
+//    while (reversed.length) {
+//        if (current.val !== reversed.pop()) return false;
+//        current = current.next;
+//    }
+//    return true;
+//};
+
 function ListNode(val) {
   this.val = val;
   this.next = null;
@@ -47,4 +74,4 @@ function initializeList(array) {
 }
 
 console.log(isPalindrome(initializeList([])));
-console.log(isPalindrome(initializeList([1,2,1,1,2,1])));
+console.log(isPalindrome(initializeList([1, 2, 1, 1, 2, 1])));

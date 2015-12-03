@@ -21,6 +21,31 @@ var inorderTraversal = function (root) {
   return results;
 };
 
+///**
+// * Definition for a binary tree node.
+// * function TreeNode(val) {
+// *     this.val = val;
+// *     this.left = this.right = null;
+// * }
+// */
+///**
+// * @param {TreeNode} root
+// * @return {number[]}
+// */
+//var inorderTraversal = function(root) {
+//    var results = [], current = root, stack = [];
+//    while (current !== null || stack.length) {
+//        while (current !== null) {
+//            stack.push(current);
+//            current = current.left;
+//        }
+//        current = stack.pop();
+//        results.push(current.val);
+//        current = current.right;
+//    }
+//    return results;
+//};
+
 var getTree = function (array) {
   if (array.length === 0) {
     return null;
