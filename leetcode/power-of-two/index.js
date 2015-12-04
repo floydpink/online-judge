@@ -3,10 +3,10 @@
  * @return {boolean}
  */
 var isPowerOfTwo = function (n) {
-  if (n <= 2) return true;
-  return (n & (n - 1)) === 0;
+  return (n > 0) && (n & (n - 1)) === 0;
 };
 
+console.log(isPowerOfTwo(0));
 console.log(isPowerOfTwo(4));
 console.log(isPowerOfTwo(6));
 console.log(isPowerOfTwo(8));
