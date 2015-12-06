@@ -1,0 +1,19 @@
+{
+  "name": "online-judge",
+  "version": "1.0.0",
+  "description": "Solving some puzzles & Learning some CS ! =========================================",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/floydpink/hackerrank.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/floydpink/hackerrank#readme",
+  "devDependencies": {
+    "async": "^1.5.0"
+  }
+}

@@ -1,3 +1,7 @@
+//
+// https://leetcode.com/problems/flatten-binary-tree-to-linked-list/
+//
+
 var getTree = function (array) {
   if (array.length === 0) {
     return null;

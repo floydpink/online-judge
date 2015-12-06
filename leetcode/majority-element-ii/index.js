@@ -1,3 +1,7 @@
+//
+// https://leetcode.com/problems/majority-element-ii/
+//
+
 /**
  * @param {number[]} nums
  * @return {number[]}

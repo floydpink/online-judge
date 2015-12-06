@@ -1,3 +1,7 @@
+//
+// https://leetcode.com/problems/remove-element/
+//
+
 /**
  * @param {number[]} nums
  * @param {number} val

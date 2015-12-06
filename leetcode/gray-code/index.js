@@ -1,3 +1,7 @@
+//
+// https://leetcode.com/problems/gray-code/
+//
+
 /**
  * @param {number} n
  * @return {number[]}

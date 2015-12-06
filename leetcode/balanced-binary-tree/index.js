@@ -1,3 +1,7 @@
+//
+// https://leetcode.com/problems/balanced-binary-tree/
+//
+
 var findHeight = function (root) {
   if (root === null) return 0;
   return 1 + Math.max(findHeight(root.left), findHeight(root.right));
