@@ -15,13 +15,15 @@ var fs = require('fs'),
         fs.stat(filePath, function (err) {
           if (!err) {
             var data = fs.readFileSync(filePath); //read existing contents into data
-            var fd = fs.openSync(filePath, 'w+');
             var url = '//\n// https://leetcode.com/problems/' + dir + '/\n//';
-            urls.push(url);
-            var buffer = new Buffer(url + '\n\n');
-            fs.writeSync(fd, buffer, 0, buffer.length); //write new data
-            fs.writeSync(fd, data, 0, data.length); //append old data
-            fs.close(fd);
+            if (data.indexOf(url) !== 0) {
+              var fd = fs.openSync(filePath, 'w+');
+              urls.push(url);
+              var buffer = new Buffer(url + '\n\n');
+              fs.writeSync(fd, buffer, 0, buffer.length); //write new data
+              fs.writeSync(fd, data, 0, data.length); //append old data
+              fs.close(fd);
+            }
             counter++;
             next();
           } else {
@@ -45,6 +47,7 @@ fs.readdir(leetCodeDirPath, function (err, dirs) {
     dirCount = dirs.length;
     async.each(dirs, iterator, function (err) {
       if (!err) {
+        console.log(urls.join('\n'));
         console.log('Processed %d files, which is %s all of %d dirs',
           counter, dirCount === counter ? '' : ' NOT ', dirCount);
         console.log();
