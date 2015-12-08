@@ -15,16 +15,14 @@
  * @return {ListNode}
  */
 var sortList = function (head) {
-  if (head === null || head.next === null) return head;
+  if (!head || !head.next) return head;
 
-  // Get the length of the list
   var len = 0, curr = head;
   while (curr) {
     len++;
     curr = curr.next;
   }
 
-  // Split and merge in steps of 1, 2, 4, 8, 16 etc. until step < length
   var dummy = new ListNode(0);
   dummy.next = head;
   var left, right, tail;
@@ -50,20 +48,20 @@ var split = function (head, n) {
   return second;
 };
 
-var merge = function (left, right, head) {
+var merge = function (l1, l2, head) {
   var curr = head;
-  while (left && right) {
-    if (left.val > right.val) {
-      curr.next = right;
-      curr = right;
-      right = right.next;
+  while (l1 && l2) {
+    if (l1.val > l2.val) {
+      curr.next = l2;
+      curr = l2;
+      l2 = l2.next;
     } else {
-      curr.next = left;
-      curr = left;
-      left = left.next;
+      curr.next = l1;
+      curr = l1;
+      l1 = l1.next;
     }
   }
-  curr.next = left ? left : right;
+  curr.next = l1 ? l1 : l2;
   while (curr.next) curr = curr.next;
   return curr;
-}
+};
