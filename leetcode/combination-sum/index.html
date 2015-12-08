@@ -1,0 +1,81 @@
+<html><head><title>Combination Sum</title></head><link href="../../viewer/prism.css" rel="stylesheet" /><style>body{font-family: sans-serif;margin:10px;}.headline{background-color:#777;color:#fff}</style><body><h1>Combination Sum</h1><div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>
+Given a set of candidate numbers (<b><i>C</i></b>) and a target number (<b><i>T</i></b>), find all unique combinations in <b><i>C</i></b> where the candidate numbers sums to <b><i>T</i></b>. 
+</p>
+
+<p>The <b>same</b> repeated number may be chosen from <b><i>C</i></b> unlimited number of times.
+</p>
+
+<p><b>Note:</b><br>
+<ul>
+<li>All numbers (including target) will be positive integers.</li>
+<li>Elements in a combination (<i>a</i><sub>1</sub>, <i>a</i><sub>2</sub>, &#x2026; , <i>a</i><sub>k</sub>) must be in non-descending order. (ie, <i>a</i><sub>1</sub> &#x2264; <i>a</i><sub>2</sub> &#x2264; &#x2026; &#x2264; <i>a</i><sub>k</sub>).</li>
+<li>The solution set must not contain duplicate combinations.</li>
+</ul>
+</p>
+
+<p>
+For example, given candidate set <code>2,3,6,7</code> and target <code>7</code>, <br>
+A solution set is: <br>
+<code>[7]</code> <br>
+<code>[2, 2, 3]</code> <br>
+</p>
+<p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+                <div>
+                  <div id="similar" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+            </div><div class="headline">Solution:</div><div><pre><code class="language-javascript">//
+// https://leetcode.com/problems/combination-sum/
+//
+
+var depthFirstSearch = function (candidates, current, remaining, path, results) {
+  // console.log('.>', current, remaining);
+  if (remaining < 0) {
+    return;
+  }
+  if (remaining === 0) {
+    // console.log('>>', path);
+    results.push(path.slice());
+    return;
+  }
+  for (var i = current; i < candidates.length; i++) {
+    var temp = path.slice();
+    temp.push(candidates[i]);
+    if (remaining < candidates[i]) break;
+    depthFirstSearch(candidates, i, remaining - candidates[i], temp, results);
+    // console.log('.<', i, remaining);
+  }
+};
+
+/**
+ * @param {number[]} candidates
+ * @param {number} target
+ * @return {number[][]}
+ */
+var combinationSum = function (candidates, target) {
+  candidates = candidates.filter(function (val, idx, self) { return self.indexOf(val) === idx;}).sort(function (a, b) { return a - b;});
+  var results = [], path = [];
+  depthFirstSearch(candidates, 0, target, path, results);
+  return results;
+};
+
+console.log(combinationSum([2], 1));
+console.log(combinationSum([1], 1));
+console.log(combinationSum([1, 2, 3, 4, 5], 10));</code></pre></div><footer><span>Last generated on: 2015-12-08T22:44:20.365Z</span><span style="float: right;"><a href="https://github.com/floydpink">&copy; Floyd Pink</a></span></footer><script src="../../viewer/prism.js"></script></body></html>

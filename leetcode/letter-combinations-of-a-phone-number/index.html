@@ -1,0 +1,84 @@
+<html><head><title>Letter Combinations of a Phone Number</title></head><link href="../../viewer/prism.css" rel="stylesheet" /><style>body{font-family: sans-serif;margin:10px;}.headline{background-color:#777;color:#fff}</style><body><h1>Letter Combinations of a Phone Number</h1><div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>Given a digit string, return all possible letter combinations that the number could represent.
+</p>
+
+<p>
+A mapping of digit to letters (just like on the telephone buttons) is given below.</p>
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png"></p>
+
+<pre>
+<b>Input:</b>Digit string &quot;23&quot;
+<b>Output:</b> [&quot;ad&quot;, &quot;ae&quot;, &quot;af&quot;, &quot;bd&quot;, &quot;be&quot;, &quot;bf&quot;, &quot;cd&quot;, &quot;ce&quot;, &quot;cf&quot;].
+</pre>
+
+<p>
+<b>Note:</b><br>
+Although the above answer is in lexicographical order, your answer could be in any order you want.
+</p><p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+                <div>
+                  <div id="similar" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+            </div><div class="headline">Solution:</div><div><pre><code class="language-javascript">//
+// https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+//
+
+var calculateMapping = function (s, map, results, prefix, pos) {
+  if (prefix.length === s.length) {
+    results.push(prefix.slice().join(''));
+  } else {
+    for (var i = pos; i < s.length; i++) {
+      var chars = map[s[i]];
+      for (var j = 0; j < chars.length && prefix.length === i; j++) {
+        var temp = prefix.slice();
+        temp[i] = chars[j];
+        calculateMapping(s, map, results, temp, pos + 1);
+      }
+    }
+  }
+};
+
+/**
+ * @param {string} digits
+ * @return {string[]}
+ */
+var letterCombinations = function (digits) {
+  var chars = digits.split('');
+  if (!chars.length) return chars;
+  var charMap = {
+    0 : [' '],
+    1 : [],
+    2 : ['a', 'b', 'c'],
+    3 : ['d', 'e', 'f'],
+    4 : ['g', 'h', 'i'],
+    5 : ['j', 'k', 'l'],
+    6 : ['m', 'n', 'o'],
+    7 : ['p', 'q', 'r', 's'],
+    8 : ['t', 'u', 'v'],
+    9 : ['w', 'x', 'y', 'z']
+  }, results = [];
+  calculateMapping(digits, charMap, results, [], 0);
+  return results;
+};
+
+console.log(letterCombinations('').join(', '));
+console.log(letterCombinations('22').join(', '));
+console.log(letterCombinations('23').join(', '));
+console.log(letterCombinations('4274').join(', '));
+</code></pre></div><footer><span>Last generated on: 2015-12-08T22:44:20.365Z</span><span style="float: right;"><a href="https://github.com/floydpink">&copy; Floyd Pink</a></span></footer><script src="../../viewer/prism.js"></script></body></html>

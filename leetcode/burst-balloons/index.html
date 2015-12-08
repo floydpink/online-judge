@@ -1,0 +1,125 @@
+<html><head><title>Burst Balloons</title></head><link href="../../viewer/prism.css" rel="stylesheet" /><style>body{font-family: sans-serif;margin:10px;}.headline{background-color:#777;color:#fff}</style><body><h1>Burst Balloons</h1><div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>
+    Given <code>n</code> balloons, indexed from <code>0</code> to <code>n-1</code>. Each balloon is painted with a
+    number on it represented by array <code>nums</code>.
+
+    You are asked to burst all the balloons. If the you burst
+    balloon <code>i</code> you will get <code>nums[left] * nums[i] * nums[right]</code> coins. Here <code>left</code>
+    and <code>right</code> are adjacent indices of <code>i</code>. After the burst, the <code>left</code> and <code>right</code>
+    then becomes adjacent.
+</p>
+<p>
+    Find the maximum coins you can collect by bursting the balloons wisely.
+</p>
+<p>
+    <b>Note:</b> <br>
+    (1) You may imagine <code>nums[-1] = nums[n] = 1</code>. They are not real therefore you can not burst them.<br>
+    (2) 0 &#x2264; <code>n</code> &#x2264; 500, 0 &#x2264; <code>nums[i]</code> &#x2264; 100
+</p>
+
+
+<p>
+    <b>Example:</b>
+</p>
+<p>
+    Given <code>[3, 1, 5, 8]</code>
+</p>
+<p>
+    Return <code>167</code>
+</p>
+<pre>
+    nums = [3,1,5,8] --&gt; [3,5,8] --&gt;   [3,8]   --&gt;  [8]  --&gt; []
+   coins =  3*1*5      +  3*5*8    +  1*3*8      + 1*8*1   = 167
+</pre>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://leetcode.com/discuss/user/peisi">@peisi</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+
+            </div><div class="headline">Solution:</div><div><pre><code class="language-javascript">//
+// https://leetcode.com/problems/burst-balloons/
+//
+
+'use strict';
+
+var findMaxCoinsForRange = function (memo, coins, left, right) {
+  if (left + 1 === right) return 0; // we need a range of at least three
+  if (memo[left][right] > 0) return memo[left][right];
+  var coinSum = 0;
+  for (var i = left + 1; i < right; i++)
+    coinSum = Math.max(coinSum,
+      coins[left] * coins[i] * coins[right] +
+      findMaxCoinsForRange(memo, coins, left, i) +
+      findMaxCoinsForRange(memo, coins, i, right));
+  memo[left][right] = coinSum;
+  return coinSum;
+};
+
+var maxCoinsMemoized = function (nums) {
+  var coins = Array.apply(null, Array(nums.length + 2)).map(Number.prototype.valueOf, 0);
+  var n = 1;
+  for (var i = 0; i < nums.length; i++) {
+    if (nums[i] > 0) {  // zero value balloons doesn't produce any coins
+      coins[n++] = nums[i];
+    }
+  }
+  coins[0] = coins[n++] = 1;  // virtual balloons
+
+  var memo = Array.apply(null, Array(n)).map(function () {
+    return Array.apply(null, Array(n)).map(Number.prototype.valueOf, 0);
+  });
+
+  var maxCoins = findMaxCoinsForRange(memo, coins, 0, n - 1);
+  // console.log(memo.join('\n'));
+  return maxCoins;
+};
+
+var maxCoinsDp = function (nums) {
+  var coins = Array.apply(null, Array(nums.length + 2)).map(Number.prototype.valueOf, 0);
+  var n = 1;
+  for (var p = 0; p < nums.length; p++) {
+    if (nums[p] > 0) {  // zero value balloons doesn't produce any coins
+      coins[n++] = nums[p];
+    }
+  }
+  coins[0] = coins[n++] = 1;  // virtual balloons
+
+  var dp = Array.apply(null, Array(n)).map(function () {
+    return Array.apply(null, Array(n)).map(Number.prototype.valueOf, 0);
+  });
+
+  for (var k = 2; k < n; ++k)
+    for (var left = 0; left < n - k; ++left) {
+      var right = left + k;
+      for (var i = left + 1; i < right; ++i)
+        dp[left][right] = Math.max(dp[left][right], coins[left] * coins[i] * coins[right] + dp[left][i] + dp[i][right]);
+    }
+
+  // console.log(dp.join('\n'));
+
+  return dp[0][n - 1];
+};
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxCoins = function (nums) {
+  // return maxCoinsMemoized(nums);
+  return maxCoinsDp(nums);
+};
+
+console.log(maxCoins([3, 1, 5, 8]));
+console.log(maxCoins([35, 16, 83, 87, 84, 59, 48, 41, 20]));</code></pre></div><footer><span>Last generated on: 2015-12-08T22:44:20.365Z</span><span style="float: right;"><a href="https://github.com/floydpink">&copy; Floyd Pink</a></span></footer><script src="../../viewer/prism.js"></script></body></html>

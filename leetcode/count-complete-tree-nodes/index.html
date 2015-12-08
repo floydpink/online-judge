@@ -1,0 +1,53 @@
+<html><head><title>Count Complete Tree Nodes</title></head><link href="../../viewer/prism.css" rel="stylesheet" /><style>body{font-family: sans-serif;margin:10px;}.headline{background-color:#777;color:#fff}</style><body><h1>Count Complete Tree Nodes</h1><div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>Given a <b>complete</b> binary tree, count the number of nodes.</p>
+
+<p><b><u>Definition of a complete binary tree from <a href="http://en.wikipedia.org/wiki/Binary_tree#Types_of_binary_trees" target="_blank">Wikipedia</a>:</u></b><br>
+In a complete binary tree every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible. It can have between 1 and 2<sup>h</sup> nodes inclusive at the last level h.</p><p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+                <div>
+                  <div id="similar" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+            </div><div class="headline">Solution:</div><div><pre><code class="language-javascript">//
+// https://leetcode.com/problems/count-complete-tree-nodes/
+//
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var countNodes = function (root) {
+  if (root === null) return 0;
+  var h = 0, left = root, right = root;
+  while (right !== null) {
+    left = left.left;
+    right = right.right;
+    h++;
+  }
+  if (left === null) {
+    return (1 << h) - 1;
+  }
+  return 1 + countNodes(root.left) + countNodes(root.right);
+};</code></pre></div><footer><span>Last generated on: 2015-12-08T22:44:20.365Z</span><span style="float: right;"><a href="https://github.com/floydpink">&copy; Floyd Pink</a></span></footer><script src="../../viewer/prism.js"></script></body></html>

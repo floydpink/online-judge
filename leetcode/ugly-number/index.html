@@ -1,0 +1,66 @@
+<html><head><title>Ugly Number</title></head><link href="../../viewer/prism.css" rel="stylesheet" /><style>body{font-family: sans-serif;margin:10px;}.headline{background-color:#777;color:#fff}</style><body><h1>Ugly Number</h1><div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>
+Write a program to check whether a given number is an ugly number.
+</p>
+
+<p>
+Ugly numbers are positive numbers whose prime factors only include <code>2, 3, 5</code>. For example, <code>6, 8</code> are ugly while <code>14</code> is not ugly since it includes another prime factor <code>7</code>.
+</p>
+
+<p>
+Note that <code>1</code> is typically treated as an ugly number.
+</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://leetcode.com/discuss/user/jianchao.li.fighter">@jianchao.li.fighter</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+                <div>
+                  <div id="similar" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+            </div><div class="headline">Solution:</div><div><pre><code class="language-javascript">//
+// https://leetcode.com/problems/ugly-number/
+//
+
+/**
+ * @param {number} number
+ * @return {boolean}
+ */
+var isUgly = function (num) {
+  if (num <= 0) return false;
+  var number = num;
+  if (number === 1) return true;
+  if (number % 2 === 0) {
+    number = number / 2;
+  }
+  if (number % 3 === 0) {
+    number = number / 3;
+  }
+  if (number % 5 === 0) {
+    number = number / 5;
+  }
+  return number === num ? false : number > 1 ? isUgly(number) : true;
+};
+
+console.log(isUgly(2));
+console.log(isUgly(3));
+console.log(isUgly(5));
+console.log(isUgly(45));
+console.log(isUgly(14));
+console.log(isUgly(17));
+console.log(isUgly(-15));
+console.log(isUgly(-2147483648));</code></pre></div><footer><span>Last generated on: 2015-12-08T22:44:20.365Z</span><span style="float: right;"><a href="https://github.com/floydpink">&copy; Floyd Pink</a></span></footer><script src="../../viewer/prism.js"></script></body></html>

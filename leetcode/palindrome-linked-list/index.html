@@ -1,0 +1,107 @@
+<html><head><title>Palindrome Linked List</title></head><link href="../../viewer/prism.css" rel="stylesheet" /><style>body{font-family: sans-serif;margin:10px;}.headline{background-color:#777;color:#fff}</style><body><h1>Palindrome Linked List</h1><div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>Given a singly linked list, determine if it is a palindrome.</p>
+
+<p><b>Follow up:</b><br>
+Could you do it in O(n) time and O(1) space?</p><p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+                <div>
+                  <div id="similar" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+            </div><div class="headline">Solution:</div><div><pre><code class="language-javascript">//
+// https://leetcode.com/problems/palindrome-linked-list/
+//
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var isPalindrome = function (head) {
+  if (head === null) return true;
+  var fast = head, slow = head, rev = null;
+  while (fast && fast.next !== null) {
+    fast = fast.next.next;
+    var temp = rev;
+    rev = slow;
+    rev.next = temp;
+    slow = slow.next;
+  }
+  if (fast) {
+    slow = slow.next;
+  }
+
+  while (rev && rev.val === slow.val) {
+    slow = slow.next;
+    rev = rev.next;
+  }
+
+  return rev === null;
+};
+
+// ****** ORIGINAL BELOW (O(1) space above) *******
+///**
+// * Definition for singly-linked list.
+// * function ListNode(val) {
+// *     this.val = val;
+// *     this.next = null;
+// * }
+// */
+///**
+// * @param {ListNode} head
+// * @return {boolean}
+// */
+//var isPalindrome = function(head) {
+//    if (head === null) return true;
+//    var reversed = [], current = head;
+//    while (current !== null) {
+//        reversed.push(current.val);
+//        current = current.next;
+//    }
+//    current = head;
+//    while (reversed.length) {
+//        if (current.val !== reversed.pop()) return false;
+//        current = current.next;
+//    }
+//    return true;
+//};
+
+function ListNode(val) {
+  this.val = val;
+  this.next = null;
+}
+
+function initializeList(array) {
+  var head = new ListNode(array.shift());
+  var current = head;
+  while (array.length) {
+    current.next = new ListNode(array.shift());
+    current = current.next;
+  }
+  return head;
+}
+
+console.log(isPalindrome(initializeList([])));
+console.log(isPalindrome(initializeList([1, 2, 1, 1, 2, 1])));
+</code></pre></div><footer><span>Last generated on: 2015-12-08T22:44:20.365Z</span><span style="float: right;"><a href="https://github.com/floydpink">&copy; Floyd Pink</a></span></footer><script src="../../viewer/prism.js"></script></body></html>

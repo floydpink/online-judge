@@ -1,0 +1,54 @@
+<html><head><title>Remove Element</title></head><link href="../../viewer/prism.css" rel="stylesheet" /><style>body{font-family: sans-serif;margin:10px;}.headline{background-color:#777;color:#fff}</style><body><h1>Remove Element</h1><div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>Given an array and a value, remove all instances of that value in place and return the new length.
+</p>
+
+<p>
+The order of elements can be changed. It doesn&apos;t matter what you leave beyond the new length.
+</p><p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+                <div>
+                  <div id="similar" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+            </div><div class="headline">Solution:</div><div><pre><code class="language-javascript">//
+// https://leetcode.com/problems/remove-element/
+//
+
+/**
+ * @param {number[]} nums
+ * @param {number} val
+ * @return {number}
+ */
+var removeElement = function (nums, val) {
+  var length = nums.length, index = 0;
+  while (index < length) {
+    if (nums[index] === val) {
+      var temp = nums[length - 1];
+      nums[length - 1] = nums[index];
+      nums[index] = temp;
+      length--;
+    } else {
+      index++;
+    }
+  }
+  return length;
+};
+
+var array = [3, 3, 5, 6, 7, 3, 4, 3];
+console.log(removeElement(array, 3));
+console.log(array);</code></pre></div><footer><span>Last generated on: 2015-12-08T22:44:20.365Z</span><span style="float: right;"><a href="https://github.com/floydpink">&copy; Floyd Pink</a></span></footer><script src="../../viewer/prism.js"></script></body></html>

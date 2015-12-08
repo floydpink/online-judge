@@ -1,0 +1,67 @@
+<html><head><title>Sort Colors</title></head><link href="../../viewer/prism.css" rel="stylesheet" /><style>body{font-family: sans-serif;margin:10px;}.headline{background-color:#777;color:#fff}</style><body><h1>Sort Colors</h1><div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>
+Given an array with <i>n</i> objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+</p>
+
+<p>
+Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
+</p>
+
+<p>
+<b>Note:</b><br>
+You are not suppose to use the library&apos;s sort function for this problem.
+</p>
+
+<p class="showspoilers"><a href="#" onclick="showSpoilers(this); return false;">click to show follow up.</a></p>
+
+<div class="spoilers">
+<p><b>Follow up:</b><br>
+A rather straight forward solution is a two-pass algorithm using counting sort.<br>
+First, iterate the array counting number of 0&apos;s, 1&apos;s, and 2&apos;s, then overwrite array with total number of 0&apos;s, then 1&apos;s and followed by 2&apos;s.</p>
+<p>Could you come up with an one-pass algorithm using only constant space?<br>
+</p>
+</div><p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+                <div>
+                  <div id="similar" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+            </div><div class="headline">Solution:</div><div><pre><code class="language-javascript">//
+// https://leetcode.com/problems/sort-colors/
+//
+
+/**
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var sortColors = function (nums) {
+  var zero = -1, one = -1, two = -1;
+  for (var i = 0; i < nums.length; i++) {
+    var num = nums[i];
+    if (num === 0) {
+      nums[++two] = 2;
+      nums[++one] = 1;
+      nums[++zero] = 0;
+    } else if (num === 1) {
+      nums[++two] = 2;
+      nums[++one] = 1;
+    } else {
+      nums[++two] = 2;
+    }
+  }
+};</code></pre></div><footer><span>Last generated on: 2015-12-08T22:44:20.365Z</span><span style="float: right;"><a href="https://github.com/floydpink">&copy; Floyd Pink</a></span></footer><script src="../../viewer/prism.js"></script></body></html>

@@ -1,0 +1,89 @@
+<html><head><title>Remove Linked List Elements</title></head><link href="../../viewer/prism.css" rel="stylesheet" /><style>body{font-family: sans-serif;margin:10px;}.headline{background-color:#777;color:#fff}</style><body><h1>Remove Linked List Elements</h1><div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>Remove all elements from a linked list of integers that have value <b><i>val</i></b>.</p>
+<p>
+<b>Example</b><br>
+<i><b>Given:</b></i> 1 --&gt; 2 --&gt; 6 --&gt; 3 --&gt; 4 --&gt; 5 --&gt; 6,  <b><i>val</i></b> = 6<br>
+<i><b>Return:</b></i> 1 --&gt; 2 --&gt; 3 --&gt; 4 --&gt; 5
+</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://leetcode.com/discuss/user/mithmatt">@mithmatt</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+                <div>
+                  <div id="similar" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+            </div><div class="headline">Solution:</div><div><pre><code class="language-javascript">//
+// https://leetcode.com/problems/remove-linked-list-elements/
+//
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} val
+ * @return {ListNode}
+ */
+var removeElements = function (head, val) {
+  var result = new ListNode(0);
+  result.next = head;
+  var current = result.next, previous = result;
+  while (current !== null) {
+    if (current.val === val) {
+      if (current.next !== null) {
+        current.val = current.next.val;
+        current.next = current.next.next;
+      } else {
+        current = previous.next = null;
+      }
+    } else {
+      previous = current;
+      current = current.next;
+    }
+  }
+  return result.next;
+};
+
+//public ListNode removeElements(ListNode head, int val) {
+//        if (head == null) return null;
+//        head.next = removeElements(head.next, val);
+//        return head.val == val ? head.next : head;
+//}
+
+function ListNode(val) {
+  this.val = val;
+  this.next = null;
+}
+
+function initializeList(array) {
+  var head = new ListNode(array.shift());
+  var current = head;
+  while (array.length) {
+    current.next = new ListNode(array.shift());
+    current = current.next;
+  }
+  return head;
+}
+
+console.log(JSON.stringify(removeElements(initializeList([1, 2, 1]), 1)));
+console.log(JSON.stringify(removeElements(initializeList([1]), 1)));
+</code></pre></div><footer><span>Last generated on: 2015-12-08T22:44:20.365Z</span><span style="float: right;"><a href="https://github.com/floydpink">&copy; Floyd Pink</a></span></footer><script src="../../viewer/prism.js"></script></body></html>

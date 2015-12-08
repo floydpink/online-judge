@@ -1,0 +1,73 @@
+<html><head><title>3Sum</title></head><link href="../../viewer/prism.css" rel="stylesheet" /><style>body{font-family: sans-serif;margin:10px;}.headline{background-color:#777;color:#fff}</style><body><h1>3Sum</h1><div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>Given an array <i>S</i> of <i>n</i> integers, are there elements <i>a</i>, <i>b</i>, <i>c</i> in <i>S</i> such that <i>a</i> + <i>b</i> + <i>c</i> = 0? Find all unique triplets in the array which gives the sum of zero.</p>
+
+<p><b>Note:</b><br>
+<ul>
+<li>Elements in a triplet (<i>a</i>,<i>b</i>,<i>c</i>) must be in non-descending order. (ie, <i>a</i> &#x2264; <i>b</i> &#x2264; <i>c</i>)</li>
+<li>The solution set must not contain duplicate triplets.</li>
+</ul>
+</p>
+
+<pre>
+    For example, given array S = {-1 0 1 2 -1 -4},
+
+    A solution set is:
+    (-1, 0, 1)
+    (-1, -1, 2)
+</pre><p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+                <div>
+                  <div id="similar" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+            </div><div class="headline">Solution:</div><div><pre><code class="language-javascript">//
+// https://leetcode.com/problems/3sum/
+//
+
+'use strict';
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var threeSum = function (nums) {
+  nums = nums.sort(function (a, b) {return a - b;});
+  var results = [];
+  for (var i = 0; i < nums.length - 2; i++) {
+    if (i === 0 || (i > 0 && nums[i] !== nums[i - 1])) {
+      var low = i + 1, high = nums.length - 1, sum = 0 - nums[i];
+      while (low < high) {
+        if (nums[low] + nums[high] === sum) {
+          results.push([nums[i], nums[low], nums[high]]);
+          while (low < high && nums[low] === nums[low + 1]) {
+            low++;
+          }
+          while (low < high && nums[high] === nums[high - 1]) {
+            high--;
+          }
+          low++;
+          high++;
+        } else if (nums[low] + nums[high] < sum) {
+          low++;
+        } else {
+          high--;
+        }
+      }
+    }
+  }
+  return results;
+};</code></pre></div><footer><span>Last generated on: 2015-12-08T22:44:20.365Z</span><span style="float: right;"><a href="https://github.com/floydpink">&copy; Floyd Pink</a></span></footer><script src="../../viewer/prism.js"></script></body></html>

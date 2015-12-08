@@ -5,14 +5,17 @@ var fs = require('fs'),
   path = require('path'),
   util = require('util'),
   async = require('async'),
+  scraper = require('./scraper'),
   counter = 0,
   dirCount = 0,
   dirPath = './leetcode/',
+  problemFileName = '/index.html',
   solutionFileName = '/index.js',
   urls = [],
-  addUrlHeader = function (solutionFile, problemName) {
+  files = [],
+  addUrlHeader = function (solutionFile, problemUrl) {
+    // console.log('addUrlHeader: %s', problemUrl);
     var data = fs.readFileSync(solutionFile); //read existing contents into data
-    var problemUrl = 'https://leetcode.com/problems/' + problemName + '/';
     var urlHead = '//\n// ' + problemUrl + '\n//';
     if (data.indexOf(urlHead) !== 0) {
       var fd = fs.openSync(solutionFile, 'w+');
@@ -23,16 +26,30 @@ var fs = require('fs'),
       fs.close(fd);
     }
   },
-  iterator = function (dir, next) {
-    var solutionFilePath = dirPath + dir + solutionFileName;
-    fs.stat(dirPath + dir, function (err, stat) {
+  iterator = function (problemName, next) {
+    var solutionFilePath = dirPath + problemName + solutionFileName;
+    fs.stat(dirPath + problemName, function (err, stat) {
       if (!err && stat.isDirectory()) {
         fs.stat(solutionFilePath, function (err) {
           if (!err) {
-            addUrlHeader(solutionFilePath, dir);
+            var problemUrl = 'https://leetcode.com/problems/' + problemName + '/';
+            addUrlHeader(solutionFilePath, problemUrl);
             counter++;
-            next();
-          } else  next(util.format('Path does not exist: %s\n%s', solutionFilePath, err));
+
+            // Scrape the problem from leetcode.com
+            var problemFilePath = dirPath + problemName + problemFileName;
+            fs.stat(problemFilePath, function (err) {
+              //if (!err) {
+              //  console.log('File already exists: %s', problemFilePath);
+              //  next();
+              //} else {
+                scraper.scrape(problemUrl, problemFilePath, solutionFilePath, function () {
+                  next();
+                });
+              //}
+              files.push({name : problemName, path : problemName});
+            });
+          } else next(util.format('Path does not exist: %s\n%s', solutionFilePath, err));
         });
       } else {
         if (err) next(err);
@@ -49,10 +66,28 @@ fs.readdir(dirPath, function (err, dirs) {
     dirCount = dirs.length;
     async.each(dirs, iterator, function (err) {
       if (!err) {
-        console.log(urls.join('\n'));
-        console.log('Processed %d files, which is %s all of %d dirs',
-          counter, dirCount === counter ? '' : ' NOT ', dirCount);
-        console.log();
+
+        var tableOfContents = '<html><head><title>Leet Code Solutions</title></head><body><h1>Problems</h1><ol>';
+        tableOfContents += files.map(function (file) {
+          return '<li><a href="./' + file.path + '/">' + file.name + '</a></li>';
+        }).join('\n');
+        tableOfContents += '</ol>' +
+          '<footer><span>Last generated on: ' + new Date().toISOString() + '</span>' +
+          '<span style="float: right;"><a href="https://github.com/floydpink">&copy; Floyd Pink</a></span></footer>' +
+          '</body></html>';
+
+        // Write the index.html for leetCode dir
+        fs.writeFile(dirPath + problemFileName.substr(1), tableOfContents, function (err) {
+          if (!err) {
+            console.log(urls.join('\n'));
+            console.log('Processed %d files, which is %s all of %d dirs',
+              counter, dirCount === counter ? '' : ' NOT ', dirCount);
+            console.log();
+          } else {
+            console.error('Error writing the table of contents file...');
+          }
+        });
+
       } else {
         console.log('Some error', err);
       }
