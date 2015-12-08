@@ -32,23 +32,19 @@ var fs = require('fs'),
       if (!err && stat.isDirectory()) {
         fs.stat(solutionFilePath, function (err) {
           if (!err) {
+            // add the URL header into the solution file
             var problemUrl = 'https://leetcode.com/problems/' + problemName + '/';
             addUrlHeader(solutionFilePath, problemUrl);
             counter++;
 
-            // Scrape the problem from leetcode.com
+            // Scrape the problem from leetcode.com and cache it into a JSON file
             var problemFilePath = dirPath + problemName + problemFileName;
-            fs.stat(problemFilePath, function (err) {
-              //if (!err) {
-              //  console.log('File already exists: %s', problemFilePath);
-              //  next();
-              //} else {
-                scraper.scrape(problemUrl, problemFilePath, solutionFilePath, function () {
-                  next();
-                });
-              //}
-              files.push({name : problemName, path : problemName});
+            scraper.scrape(problemUrl, problemFilePath, solutionFilePath, function () {
+              next();
             });
+
+            // save the problem into an array for generating the toc
+            files.push({name : problemName, path : problemName});
           } else next(util.format('Path does not exist: %s\n%s', solutionFilePath, err));
         });
       } else {

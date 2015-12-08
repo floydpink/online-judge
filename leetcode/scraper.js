@@ -9,7 +9,7 @@ var problemFileContents = '<html>' +
   '<link href="../../viewer/prism.css" rel="stylesheet" /><style>' +
   'body{font-family: sans-serif;margin:25px;}' +
   '.headline{background-color:#777;color:#fff}' +
-  '</style><body><h1>%TITLE%</h1>' +
+  '</style><body><h2><a href="%URL%">%TITLE%</a></h2>' +
   '<div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div>' +
   '<div class="headline">Problem:</div>' +
   '<div>%CONTENT%</div><div class="headline">Solution:</div>' +
@@ -27,7 +27,8 @@ module.exports = {
       saveProblemFile = function (questionTitle, questionContent) {
         var problem = problemFileContents.replace(/%TITLE%/g, questionTitle)
           .replace(/%CONTENT%/g, questionContent)
-          .replace(/%SOLUTION%/, solution)
+          .replace(/%SOLUTION%/g, solution)
+          .replace(/%URL%/g, url)
           .replace('<p><a href="/subscribe/">Subscribe</a> to see which companies asked this question</p>', '');
 
         fs.writeFile(problemFilepath, problem, function (err) {
@@ -39,13 +40,14 @@ module.exports = {
         });
       };
     var questionDataFilepath = solutionFilepath.substring(0, solutionFilepath.lastIndexOf('/')) + '/problem.json';
-    console.log(questionDataFilepath);
+    // console.log(questionDataFilepath);
     fs.stat(questionDataFilepath, function (err) {
       if (!err) {
-        console.log('question metadata exists: %s', questionDataFilepath);
+        // console.log('question metadata exists: %s', questionDataFilepath);
         var problem = require(__dirname + questionDataFilepath.replace('./leetcode', ''));
         saveProblemFile(problem.title, problem.content);
       } else {
+        console.log('Fetching the problem metadata for url: %s', url);
         request(url, function (error, response, html) {
           if (!error) {
             var $ = cheerio.load(html);
