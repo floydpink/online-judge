@@ -3,38 +3,40 @@
 
 var fs = require('fs'),
   path = require('path'),
+  util = require('util'),
   async = require('async'),
   counter = 0,
   dirCount = 0,
-  leetCodeDirPath = './leetcode/',
+  dirPath = './leetcode/',
+  solutionFileName = '/index.js',
   urls = [],
+  addUrlHeader = function (solutionFile, problemName) {
+    var data = fs.readFileSync(solutionFile); //read existing contents into data
+    var problemUrl = 'https://leetcode.com/problems/' + problemName + '/';
+    var urlHead = '//\n// ' + problemUrl + '\n//';
+    if (data.indexOf(urlHead) !== 0) {
+      var fd = fs.openSync(solutionFile, 'w+');
+      urls.push(problemUrl);
+      var buffer = new Buffer(urlHead + '\n\n');
+      fs.writeSync(fd, buffer, 0, buffer.length); //write new data
+      fs.writeSync(fd, data, 0, data.length); //append old data
+      fs.close(fd);
+    }
+  },
   iterator = function (dir, next) {
-    var fileName = '/index.js', filePath = leetCodeDirPath + dir + fileName;
-    fs.stat(leetCodeDirPath + dir, function (err, stat) {
+    var solutionFilePath = dirPath + dir + solutionFileName;
+    fs.stat(dirPath + dir, function (err, stat) {
       if (!err && stat.isDirectory()) {
-        fs.stat(filePath, function (err) {
+        fs.stat(solutionFilePath, function (err) {
           if (!err) {
-            var data = fs.readFileSync(filePath); //read existing contents into data
-            var url = '//\n// https://leetcode.com/problems/' + dir + '/\n//';
-            if (data.indexOf(url) !== 0) {
-              var fd = fs.openSync(filePath, 'w+');
-              urls.push(url);
-              var buffer = new Buffer(url + '\n\n');
-              fs.writeSync(fd, buffer, 0, buffer.length); //write new data
-              fs.writeSync(fd, data, 0, data.length); //append old data
-              fs.close(fd);
-            }
+            addUrlHeader(solutionFilePath, dir);
             counter++;
             next();
-          } else {
-            console.warn('Path does not exist: ', filePath, err);
-            next(err);
-          }
+          } else  next(util.format('Path does not exist: %s\n%s', solutionFilePath, err));
         });
       } else {
-        if (err) {
-          next(err);
-        } else {
+        if (err) next(err);
+        else {
           dirCount--;
           next();
         }
@@ -42,7 +44,7 @@ var fs = require('fs'),
     });
   };
 
-fs.readdir(leetCodeDirPath, function (err, dirs) {
+fs.readdir(dirPath, function (err, dirs) {
   if (!err) {
     dirCount = dirs.length;
     async.each(dirs, iterator, function (err) {
