@@ -14,8 +14,7 @@ var problemFileContents = '<html>' +
   '<div class="headline">Problem:</div>' +
   '<div>%CONTENT%</div><div class="headline">Solution:</div>' +
   '<div><pre><code class="language-javascript">%SOLUTION%</code></pre></div>' +
-  '<footer><span>Last generated on: ' + new Date().toISOString() + '</span>' +
-  '<span style="float: right;"><a href="https://github.com/floydpink">&copy; Floyd Pink</a></span></footer>' +
+  '<footer><span style="float: right;"><a href="https://github.com/floydpink">&copy; Floyd Pink</a></span></footer>' +
   '<script src="../../viewer/prism.js"></script>' +
   '</body></html>';
 
