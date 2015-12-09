@@ -8,18 +8,11 @@
  * @return {number}
  */
 var removeElement = function (nums, val) {
-  var length = nums.length, index = 0;
-  while (index < length) {
-    if (nums[index] === val) {
-      var temp = nums[length - 1];
-      nums[length - 1] = nums[index];
-      nums[index] = temp;
-      length--;
-    } else {
-      index++;
-    }
+  var index = 0;
+  for (var i = 0; i < nums.length; i++) {
+    if (nums[i] !== val) nums[index++] = nums[i];
   }
-  return length;
+  return index;
 };
 
 var array = [3, 3, 5, 6, 7, 3, 4, 3];
