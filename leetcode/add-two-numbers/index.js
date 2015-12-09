@@ -17,23 +17,23 @@
  * @return {ListNode}
  */
 var addTwoNumbers = function (l1, l2) {
-  var dummy = new ListNode(0), current = dummy, sum = 0;
-  while (l1 !== null || l2 !== null) {
-    sum = Math.floor(sum / 10);
-    if (l1 != null) {
+  if (!l1) return l2;
+  if (!l2) return l1;
+  var dummy = new ListNode(0), sum = 0, current = dummy;
+  while (l1 || l2) {
+    if (l1) {
       sum += l1.val;
       l1 = l1.next;
     }
-    if (l2 != null) {
+    if (l2) {
       sum += l2.val;
       l2 = l2.next;
     }
     current.next = new ListNode(sum % 10);
     current = current.next;
+    sum = Math.floor(sum / 10);
   }
-  if (Math.floor(sum / 10) === 1) {
-    current.next = new ListNode(1);
-  }
+  if (sum > 0) current.next = new ListNode(sum);
   return dummy.next;
 };
 
