@@ -1,0 +1,56 @@
+<html><head><title>Rectangle Area</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /></head><link href="../../viewer/prism.css" rel="stylesheet" /><link href="../../viewer/styles.css" rel="stylesheet" /><body><h2><a href="https://leetcode.com/problems/rectangle-area/" target="_blank">Rectangle Area</a></h2><div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>Find the total area covered by two <b>rectilinear</b> rectangles in a <b>2D</b> plane.</p>
+<p>Each rectangle is defined by its bottom left corner and top right corner as shown in the figure.</p>
+<div style="width:529px; height:300px; background-color:rgb(235, 235, 235);">
+<img src="/static/images/problemset/rectangle_area.png" border="0" alt="Rectangle Area">
+</div>
+<div style="padding-top:23px;">
+<p>Assume that the total area is never beyond the maximum possible value of <b>int</b>.</p>
+</div>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://leetcode.com/discuss/user/mithmatt">@mithmatt</a> for adding this problem, creating the above image and all test cases.</p><p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+
+            </div><div class="headline">Solution:</div><div><a href="#" onclick="showSolution(this)">Show...</a></div><div id="solution"><pre><code class="language-javascript">//
+// https://leetcode.com/problems/rectangle-area/
+//
+
+// https://leetcode.com/discuss/39398/my-java-solution-sum-of-areas-overlapped-area
+/**
+ * @param {number} A
+ * @param {number} B
+ * @param {number} C
+ * @param {number} D
+ * @param {number} E
+ * @param {number} F
+ * @param {number} G
+ * @param {number} H
+ * @return {number}
+ */
+var computeArea = function (A, B, C, D, E, F, G, H) {
+  var area1 = (C - A) * (D - B);
+  var area2 = (G - E) * (H - F);
+
+  var left = Math.max(A, E);
+  var right = Math.min(C, G);
+  var bottom = Math.max(B, F);
+  var top = Math.min(D, H);
+
+  var overlap = 0;
+  if (right > left && top > bottom) overlap = (right - left) * (top - bottom);
+
+  return area1 + area2 - overlap;
+};</code></pre></div><footer><span style="float: right;"><a href="https://github.com/floydpink" target="_blank">&copy; Floyd Pink</a></span></footer><script src="../../viewer/prism.js"></script><script src="../../viewer/scripts.js"></script></body></html>
