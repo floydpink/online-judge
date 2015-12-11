@@ -1,0 +1,40 @@
+<html><head><title>Length of Last Word</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /></head><link href="../../viewer/prism.css" rel="stylesheet" /><link href="../../viewer/styles.css" rel="stylesheet" /><body><h2><a href="https://leetcode.com/problems/length-of-last-word/" target="_blank">Length of Last Word</a></h2><div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>Given a string <i>s</i> consists of upper/lower-case alphabets and empty space characters <code>&apos; &apos;</code>, return the length of last word in the string.</p>
+
+<p>If the last word does not exist, return 0.</p>
+
+<p><b>Note:</b> A word is defined as a character sequence consists of non-space characters only.</p>
+
+<p>
+For example, <br>
+Given <i>s</i> = <code>&quot;Hello World&quot;</code>,<br>
+return <code>5</code>.
+</p><p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+
+            </div><div class="headline">Solution:</div><div><a href="#" onclick="showSolution(this)">Show...</a></div><div id="solution"><pre><code class="language-javascript">//
+// https://leetcode.com/problems/length-of-last-word/
+//
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLastWord = function (s) {
+  if (s === '') return 0;
+  var array = s.split(' ').filter(function (w) {return w.length > 0;});
+  return array.length ? array[array.length - 1].length : 0;
+};</code></pre></div><footer><span style="float: right;"><a href="https://github.com/floydpink" target="_blank">&copy; Floyd Pink</a></span></footer><script src="../../viewer/prism.js"></script><script src="../../viewer/scripts.js"></script></body></html>
