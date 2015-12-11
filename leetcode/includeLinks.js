@@ -65,7 +65,7 @@ fs.readdir(dirPath, function (err, dirs) {
 
         var tableOfContents = '<html><head><title>Leet Code Solutions</title></head><body><h1>Problems</h1><ol>';
         tableOfContents += files.map(function (file) {
-          return '<li><a href="./' + file.path + '/">' + file.name + '</a></li>';
+          return '<li><a href="./' + file.path + '/index.html">' + file.name + '</a></li>';
         }).join('\n');
         tableOfContents += '</ol>' +
           '<footer><span>Last generated on: ' + new Date().toISOString() + '</span>' +
