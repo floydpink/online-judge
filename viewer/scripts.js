@@ -6,6 +6,9 @@ function showSolution(button) {
 
 document.addEventListener('click', function (e) {
   if (e.target.tagName === 'A' && e.target.getAttribute('target') === '_blank') {
-    console.log('Here..');
+    if (cordova && cordova.InAppBrowser) {
+      cordova.InAppBrowser.open(e.target.getAttribute('href'), '_blank');
+      e.preventDefault();
+    }
   }
 });
