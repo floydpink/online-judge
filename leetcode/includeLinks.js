@@ -63,13 +63,17 @@ fs.readdir(dirPath, function (err, dirs) {
     async.each(dirs, iterator, function (err) {
       if (!err) {
 
-        var tableOfContents = '<html><head><title>Leet Code Solutions</title></head><body><h1>Problems</h1><ol>';
+        var tableOfContents = '<html><head><title>Leet Code Solutions</title>' +
+          '<meta name="viewport" content="width=device-width, initial-scale=1.0" />' +
+          '<link href="../viewer/styles.css" rel="stylesheet" />' +
+          '</head><body><h1>Problems</h1><ol>';
         tableOfContents += files.map(function (file) {
           return '<li><a href="./' + file.path + '/index.html">' + file.name + '</a></li>';
         }).join('\n');
         tableOfContents += '</ol>' +
-          '<footer><span>Last generated on: ' + new Date().toISOString() + '</span>' +
-          '<span style="float: right;"><a href="https://github.com/floydpink">&copy; Floyd Pink</a></span></footer>' +
+          '<footer><small>Last generated on: ' + new Date().toISOString() + '</small>' +
+          '<span style="float: right;"><a href="https://github.com/floydpink" target="_blank">&copy; Floyd Pink</a></span></footer>' +
+          '<script src="../viewer/scripts.js"></script>' +
           '</body></html>';
 
         // Write the index.html for leetCode dir

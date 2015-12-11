@@ -1,0 +1,26 @@
+body {
+  font-family : 'Lucida Sans Unicode', 'Lucida Grande', Helvetica, Arial, sans-serif;
+  margin      : 25px;
+}
+
+a, a:visited {
+  color : #334dff;
+}
+
+ol > li > a {
+  display : block;
+}
+
+ol > li:nth-child(even) > a {
+  background-color : #eeeeee;
+}
+
+#solution {
+  display : none;
+}
+
+.headline {
+  background-color : #b7b7b7;
+  color            : #fff;
+  padding          : 2px;
+}

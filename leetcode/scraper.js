@@ -5,17 +5,18 @@ var fs = require('fs'),
   cheerio = require('cheerio');
 
 var problemFileContents = '<html>' +
-  '<head><title>%TITLE%</title></head>' +
-  '<link href="../../viewer/prism.css" rel="stylesheet" /><style>' +
-  'body{font-family: sans-serif;margin:25px;}' +
-  '.headline{background-color:#777;color:#fff}' +
-  '</style><body><h2><a href="%URL%">%TITLE%</a></h2>' +
+  '<head><title>%TITLE%</title>' +
+  '<meta name="viewport" content="width=device-width, initial-scale=1.0" />' +
+  '</head><link href="../../viewer/prism.css" rel="stylesheet" /><link href="../../viewer/styles.css" rel="stylesheet" />' +
+  '<body><h2><a href="%URL%" target="_blank">%TITLE%</a></h2>' +
   '<div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div>' +
   '<div class="headline">Problem:</div>' +
   '<div>%CONTENT%</div><div class="headline">Solution:</div>' +
-  '<div><pre><code class="language-javascript">%SOLUTION%</code></pre></div>' +
-  '<footer><span style="float: right;"><a href="https://github.com/floydpink">&copy; Floyd Pink</a></span></footer>' +
+  '<div><a href="#" onclick="showSolution(this)">Show...</a></div>' +
+  '<div id="solution"><pre><code class="language-javascript">%SOLUTION%</code></pre></div>' +
+  '<footer><span style="float: right;"><a href="https://github.com/floydpink" target="_blank">&copy; Floyd Pink</a></span></footer>' +
   '<script src="../../viewer/prism.js"></script>' +
+  '<script src="../../viewer/scripts.js"></script>' +
   '</body></html>';
 
 module.exports = {
