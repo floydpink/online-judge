@@ -1,0 +1,54 @@
+<html><head><title>Multiply Strings</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /></head><link href="../../viewer/prism.css" rel="stylesheet" /><link href="../../viewer/styles.css" rel="stylesheet" /><body><h2><a href="https://leetcode.com/problems/multiply-strings/" target="_blank">Multiply Strings</a></h2><div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>Given two numbers represented as strings, return multiplication of the numbers as a string.</p>
+
+<p>Note: The numbers can be arbitrarily large and are non-negative.</p><p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+                <div>
+                  <div id="similar" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+            </div><div class="headline">Solution:</div><div><a href="#" onclick="showSolution(this)">Show...</a></div><div id="solution"><pre><code class="language-javascript">//
+// https://leetcode.com/problems/multiply-strings/
+//
+
+// https://leetcode.com/discuss/33951/ac-solution-in-java-with-explanation
+/**
+ * @param {string} num1
+ * @param {string} num2
+ * @return {string}
+ */
+var multiply = function (num1, num2) {
+  var n1 = num1.length, n2 = num2.length;
+  var products = Array.apply(null, Array(n1 + n2)).map(Number.prototype.valueOf, 0);
+  for (var i = n1 - 1; i >= 0; i--) {
+    for (var j = n2 - 1; j >= 0; j--) {
+      var d1 = num1.charCodeAt(i) - '0'.charCodeAt(0);
+      var d2 = num2.charCodeAt(j) - '0'.charCodeAt(0);
+      products[i + j + 1] += d1 * d2;
+    }
+  }
+  var carry = 0;
+  for (i = products.length - 1; i >= 0; i--) {
+    var temp = (products[i] + carry) % 10;
+    carry = Math.floor((products[i] + carry) / 10);
+    products[i] = temp;
+  }
+  var result = products.join('');
+  while (result.length !== 0 && result.charAt(0) === '0') result = result.substring(1);
+  return result.length === 0 ? '0' : result;
+};</code></pre></div><footer><span style="float: right;"><a href="https://github.com/floydpink" target="_blank">&copy; Floyd Pink</a></span></footer><script src="../../viewer/prism.js"></script><script src="../../viewer/scripts.js"></script></body></html>
