@@ -1,0 +1,51 @@
+<html><head><title>Add Binary</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /></head><link href="../../viewer/prism.css" rel="stylesheet" /><link href="../../viewer/styles.css" rel="stylesheet" /><body><h2><a href="https://leetcode.com/problems/add-binary/" target="_blank">Add Binary</a></h2><div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>
+Given two binary strings, return their sum (also a binary string).
+</p>
+
+<p>
+For example,<br>
+a = <code>&quot;11&quot;</code><br>
+b = <code>&quot;1&quot;</code><br>
+Return <code>&quot;100&quot;</code>.
+</p><p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+                <div>
+                  <div id="similar" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+            </div><div class="headline">Solution:</div><div><a href="#" onclick="showSolution(this)">Show...</a></div><div id="solution"><pre><code class="language-javascript">//
+// https://leetcode.com/problems/add-binary/
+//
+
+/**
+ * @param {string} a
+ * @param {string} b
+ * @return {string}
+ */
+var addBinary = function (a, b) {
+  var i = a.length, j = b.length, res = '', carry = 0;
+  while (i > 0 || j > 0 || carry) {
+    var sum = carry;
+    if (i > 0) sum += parseInt(a.charAt(--i), 10);
+    if (j > 0) sum += parseInt(b.charAt(--j), 10);
+    res = (sum % 2 === 0 ? '0' : '1') + res;
+    carry = sum > 1 ? 1 : 0;
+  }
+  return res;
+};</code></pre></div><footer><span style="float: right;"><a href="https://github.com/floydpink" target="_blank">&copy; Floyd Pink</a></span></footer><script src="../../viewer/prism.js"></script><script src="../../viewer/scripts.js"></script></body></html>
