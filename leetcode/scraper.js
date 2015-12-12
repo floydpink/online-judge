@@ -20,6 +20,7 @@ var problemFileContents = '<html>' +
   '<div><a href="#" onclick="showSolution(this)">Show...</a></div>' +
   '<div id="solution"><pre><code class="language-javascript">%SOLUTION%</code></pre></div>' +
   '<footer><span style="float: right;"><a href="https://github.com/floydpink" target="_blank">&copy; Floyd Pink</a></span></footer>' +
+  '<script type="text/javascript" src="../../cordova.js"></script>' +
   '<script src="../../viewer/prism.js"></script>' +
   '<script src="../../viewer/scripts.js"></script>' +
   '</body></html>';

@@ -79,8 +79,8 @@ fs.readdir(dirPath, function (err, dirs) {
         tableOfContents += '</ol>' +
           '<footer><small>Last generated on: ' + new Date().toISOString() + '</small>' +
           '<span style="float: right;"><a href="https://github.com/floydpink" target="_blank">&copy; Floyd Pink</a></span></footer>' +
-          '<script type="text/javascript" src="cordova.js">' +
-          '</script><script src="../viewer/scripts.js"></script>' +
+          '<script type="text/javascript" src="../cordova.js"></script>' +
+          '<script src="../viewer/scripts.js"></script>' +
           '</body></html>';
 
         // Write the index.html for leetCode dir
