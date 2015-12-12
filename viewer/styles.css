@@ -3,15 +3,27 @@ body {
   margin      : 25px;
 }
 
+.back-button {
+  float: right;
+}
+
 a, a:visited {
   color : #334dff;
 }
 
-ol > li > a {
+ol.problems {
+  font-size : larger;
+}
+
+ol.problems > li {
+  padding : 3px;
+}
+
+ol.problems > li > a {
   display : block;
 }
 
-ol > li:nth-child(even) > a {
+ol.problems > li:nth-child(even) > a {
   background-color : #eeeeee;
 }
 

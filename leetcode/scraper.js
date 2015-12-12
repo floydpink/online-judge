@@ -14,10 +14,10 @@ var problemFileContents = '<html>' +
   '\n<!-- END COPY/PASTE FROM CORDOVA  -->\n' +
   '</head><link href="../../viewer/prism.css" rel="stylesheet" /><link href="../../viewer/styles.css" rel="stylesheet" />' +
   '<body><h2><a href="%URL%" target="_blank">%TITLE%</a></h2>' +
-  '<div><a href="javascript:history.back()">Back...</a></div><div>&#160;</div>' +
+  '<div class="back-button"><a href="../index.html">Back...</a></div><div>&#160;</div>' +
   '<div class="headline">Problem:</div>' +
   '<div>%CONTENT%</div><div class="headline">Solution:</div>' +
-  '<div><a href="#" onclick="showSolution(this)">Show...</a></div>' +
+  '<div><a id="showSolution" href="#">Show...</a></div>' +
   '<div id="solution"><pre><code class="language-javascript">%SOLUTION%</code></pre></div>' +
   '<footer><span style="float: right;"><a href="https://github.com/floydpink" target="_blank">&copy; Floyd Pink</a></span></footer>' +
   '<script type="text/javascript" src="../../cordova.js"></script>' +

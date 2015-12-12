@@ -72,7 +72,7 @@ fs.readdir(dirPath, function (err, dirs) {
           '\n<!-- END COPY/PASTE FROM CORDOVA  -->\n' +
           '<title>Leet Code Solutions</title>' +
           '<link href="../viewer/styles.css" rel="stylesheet" />' +
-          '</head><body><h1>Problems</h1><ol>';
+          '</head><body><h1>Problems</h1><ol class="problems">';
         tableOfContents += files.map(function (file) {
           return '<li><a href="./' + file.path + '/index.html">' + file.name + '</a></li>';
         }).join('\n');
