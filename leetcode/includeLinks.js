@@ -63,8 +63,14 @@ fs.readdir(dirPath, function (err, dirs) {
     async.each(dirs, iterator, function (err) {
       if (!err) {
 
-        var tableOfContents = '<html><head><title>Leet Code Solutions</title>' +
-          '<meta name="viewport" content="width=device-width, initial-scale=1.0" />' +
+        var tableOfContents = '<html><head>' +
+          '\n<!-- BEGIN COPY/PASTE FROM CORDOVA  -->\n' +
+          '<meta http-equiv="Content-Security-Policy" content="default-src \'self\' data: gap: https://ssl.gstatic.com \'unsafe-eval\'; style-src \'self\' \'unsafe-inline\'; media-src *">' +
+          '<meta name="format-detection" content="telephone=no">' +
+          '<meta name="msapplication-tap-highlight" content="no">' +
+          '<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">' +
+          '\n<!-- END COPY/PASTE FROM CORDOVA  -->\n' +
+          '<title>Leet Code Solutions</title>' +
           '<link href="../viewer/styles.css" rel="stylesheet" />' +
           '</head><body><h1>Problems</h1><ol>';
         tableOfContents += files.map(function (file) {
@@ -73,7 +79,8 @@ fs.readdir(dirPath, function (err, dirs) {
         tableOfContents += '</ol>' +
           '<footer><small>Last generated on: ' + new Date().toISOString() + '</small>' +
           '<span style="float: right;"><a href="https://github.com/floydpink" target="_blank">&copy; Floyd Pink</a></span></footer>' +
-          '<script src="../viewer/scripts.js"></script>' +
+          '<script type="text/javascript" src="cordova.js">' +
+          '</script><script src="../viewer/scripts.js"></script>' +
           '</body></html>';
 
         // Write the index.html for leetCode dir
