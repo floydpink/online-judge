@@ -27,10 +27,6 @@ ol.problems > li:nth-child(even) {
   background-color : #cccccc;
 }
 
-ol.problems > li:nth-child(even) {
-  background-color : #999999;
-}
-
 #solution {
   display : none;
 }

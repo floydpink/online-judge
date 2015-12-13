@@ -39,12 +39,15 @@ var fs = require('fs'),
 
             // Scrape the problem from leetcode.com and cache it into a JSON file
             var problemFilePath = dirPath + problemName + problemFileName;
-            scraper.scrape(problemUrl, problemFilePath, solutionFilePath, function () {
-              next();
+            scraper.scrape(problemUrl, problemFilePath, solutionFilePath, function (err, question) {
+              if (err) console.error(err);
+              else {
+                next();
+                // save the problem into an array for generating the toc
+                files.push({question : question, path : problemName});
+              }
             });
 
-            // save the problem into an array for generating the toc
-            files.push({name : problemName, path : problemName});
           } else next(util.format('Path does not exist: %s\n%s', solutionFilePath, err));
         });
       } else {
@@ -73,8 +76,12 @@ fs.readdir(dirPath, function (err, dirs) {
           '<title>Leet Code Solutions</title>' +
           '<link href="../viewer/styles.css" rel="stylesheet" />' +
           '</head><body><h1>Problems</h1><ol class="problems">';
-        tableOfContents += files.map(function (file) {
-          return '<li><a href="./' + file.path + '/index.html">' + file.name + '</a></li>';
+        tableOfContents += files.sort(function (a, b) {
+          return a.question.id - b.question.id;
+        }).map(function (file) {
+          return '<li><a href="./' + file.path + '/index.html">' +
+            file.question.id + ': ' + file.question.title + ' (' + file.question.type + ')' +
+            '</a></li>';
         }).join('\n');
         tableOfContents += '</ol>' +
           '<footer><small>Last generated on: ' + new Date().toISOString() + '</small>' +

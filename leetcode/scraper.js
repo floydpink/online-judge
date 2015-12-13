@@ -30,18 +30,19 @@ module.exports = {
   scrape : function (url, problemFilepath, solutionFilepath, done) {
     // console.log('scrape: %s, %s', url, problemFilepath);
     var solution = fs.readFileSync(solutionFilepath, {encoding : 'utf8'}),
-      saveProblemFile = function (questionTitle, questionContent) {
-        var problem = problemFileContents.replace(/%TITLE%/g, questionTitle)
-          .replace(/%CONTENT%/g, questionContent)
+      saveProblemFile = function (question) {
+        var title = question.id + ': ' + question.title + ' (' + question.type + ')';
+        var problem = problemFileContents.replace(/%TITLE%/g, title)
+          .replace(/%CONTENT%/g, question.content)
           .replace(/%SOLUTION%/g, solution)
           .replace(/%URL%/g, url)
           .replace('<p><a href="/subscribe/">Subscribe</a> to see which companies asked this question</p>', '');
 
         fs.writeFile(problemFilepath, problem, function (err) {
-          if (!err) done();
+          if (!err) done(null, question);
           else {
             console.error('Error when retrieving/saving the contents from %s', url);
-            done();
+            done(null, question);
           }
         });
       };
@@ -51,18 +52,26 @@ module.exports = {
       if (!err) {
         // console.log('question metadata exists: %s', questionDataFilepath);
         var problem = require(__dirname + questionDataFilepath.replace('./leetcode', ''));
-        saveProblemFile(problem.title, problem.content);
+        saveProblemFile(problem);
       } else {
         console.log('Fetching the problem metadata for url: %s', url);
         request(url, function (error, response, html) {
           if (!error) {
             var $ = cheerio.load(html);
             var questionTitle = $('.question-title > h3').text();
+            var questionId = $('#ajaxform').find('input[name="question_id"]').val();
+            var questionType = $('.total-ac').next().next().find('strong').text();
             // remove unwanted text
             $('#tags, #similar, .hidebutton').empty();
             var questionContent = $('.question-content').html();
-            fs.writeFileSync(questionDataFilepath, JSON.stringify({title : questionTitle, content : questionContent}), {encoding : 'utf8'});
-            saveProblemFile(questionTitle, questionContent);
+            var question = {
+              id      : questionId,
+              type    : questionType,
+              title   : questionTitle,
+              content : questionContent
+            };
+            fs.writeFileSync(questionDataFilepath, JSON.stringify(question), {encoding : 'utf8'});
+            saveProblemFile(question);
           } else {
             done(error);
           }
