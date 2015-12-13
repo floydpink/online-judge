@@ -1,0 +1,59 @@
+<html><head><title>ZigZag Conversion</title>
+<!-- BEGIN COPY/PASTE FROM CORDOVA  -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *"><meta name="format-detection" content="telephone=no"><meta name="msapplication-tap-highlight" content="no"><meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+<!-- END COPY/PASTE FROM CORDOVA  -->
+</head><link href="../../viewer/prism.css" rel="stylesheet" /><link href="../../viewer/styles.css" rel="stylesheet" /><body><h2><a href="https://leetcode.com/problems/zigzag-conversion/" target="_blank">ZigZag Conversion</a></h2><div class="back-button"><a href="../index.html">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>
+The string <code>&quot;PAYPALISHIRING&quot;</code> is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+<pre>
+P   A   H   N
+A P L S I I G
+Y   I   R
+</pre>
+
+And then read line by line: <code>&quot;PAHNAPLSIIGYIR&quot;</code></p>
+
+<p>
+Write the code that will take a string and make this conversion given a number of rows:
+
+<pre>string convert(string text, int nRows);</pre>
+
+<code>convert(&quot;PAYPALISHIRING&quot;, 3)</code> should return <code>&quot;PAHNAPLSIIGYIR&quot;</code>.
+</p><p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+
+            </div><div class="headline">Solution:</div><div><a id="showSolution" href="#">Show...</a></div><div id="solution"><pre><code class="language-javascript">//
+// https://leetcode.com/problems/zigzag-conversion/
+//
+
+/**
+ * @param {string} s
+ * @param {number} numRows
+ * @return {string}
+ */
+var convert = function (s, numRows) {
+  var results = Array.apply(null, Array(numRows)).map(function () {return '';}), len = s.length, i = 0;
+  while (i < len) {
+    // vertically down
+    for (var j = 0; j < numRows && i < len; j++) {
+      results[j] += s.charAt(i++);
+    }
+    for (var k = numRows - 2; k >= 1 && i < len; k--) {
+      results[k] += s.charAt(i++);
+    }
+  }
+  return results.join('');
+};</code></pre></div><footer><span style="float: right;"><a href="https://github.com/floydpink" target="_blank">&copy; Floyd Pink</a></span></footer><script type="text/javascript" src="../../cordova.js"></script><script src="../../viewer/prism.js"></script><script src="../../viewer/scripts.js"></script></body></html>
