@@ -61,7 +61,7 @@ module.exports = {
             // remove unwanted text
             $('#tags, #similar, .hidebutton').empty();
             var questionContent = $('.question-content').html();
-            fs.writeFileSync(questionDataFilepath, JSON.stringify({ title: questionTitle, content: questionContent }), { encoding: 'utf8'});
+            fs.writeFileSync(questionDataFilepath, JSON.stringify({title : questionTitle, content : questionContent}), {encoding : 'utf8'});
             saveProblemFile(questionTitle, questionContent);
           } else {
             done(error);

@@ -2,6 +2,10 @@
 // https://leetcode.com/problems/path-sum/
 //
 
+//
+// https://leetcode.com/problems/path-sum/
+//
+
 /**
  * Definition for a binary tree node.
  * function TreeNode(val) {
@@ -33,33 +37,32 @@ var hasPathSum = function (root, sum) {
 };
 
 /*
-//  Iterative DFS
-var hasPathSum = function (root, sum) {
-  var stack = [], pre = null, cur = root;
-  var pathsum = 0;
-  while (cur || stack.length) {
-    while (cur) {
-      stack.push(cur);
-      pathsum += cur.val;
-      cur = cur.left;
-    }
-    cur = stack[stack.length - 1];
+ //  Iterative DFS
+ var hasPathSum = function (root, sum) {
+ var stack = [], pre = null, cur = root;
+ var pathsum = 0;
+ while (cur || stack.length) {
+ while (cur) {
+ stack.push(cur);
+ pathsum += cur.val;
+ cur = cur.left;
+ }
+ cur = stack[stack.length - 1];
 
-    if (!cur.left && !cur.right && pathsum === sum) return true;
+ if (!cur.left && !cur.right && pathsum === sum) return true;
 
-    if (cur.right && pre !== cur.right) {
-      cur = cur.right;
-    } else {
-      pre = cur;
-      stack.pop();
-      pathsum -= cur.val;
-      cur = null;
-    }
-  }
-  return false;
-};
-*/
-
+ if (cur.right && pre !== cur.right) {
+ cur = cur.right;
+ } else {
+ pre = cur;
+ stack.pop();
+ pathsum -= cur.val;
+ cur = null;
+ }
+ }
+ return false;
+ };
+ */
 
 
 function TreeNode(val) {
@@ -79,4 +82,4 @@ var arrayToBinaryTree = function (nums) {
 };
 
 console.log(hasPathSum(arrayToBinaryTree([1]), 1));
-console.log(hasPathSum(arrayToBinaryTree([2,1]), 1));
+console.log(hasPathSum(arrayToBinaryTree([2, 1]), 1));
