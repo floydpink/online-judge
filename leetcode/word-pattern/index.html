@@ -1,0 +1,66 @@
+<html><head><title>Word Pattern</title>
+<!-- BEGIN COPY/PASTE FROM CORDOVA  -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *"><meta name="format-detection" content="telephone=no"><meta name="msapplication-tap-highlight" content="no"><meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+<!-- END COPY/PASTE FROM CORDOVA  -->
+</head><link href="../../viewer/prism.css" rel="stylesheet" /><link href="../../viewer/styles.css" rel="stylesheet" /><body><h2><a href="https://leetcode.com/problems/word-pattern/" target="_blank">Word Pattern</a></h2><div class="back-button"><a href="../index.html">Back...</a></div><div>&#160;</div><div class="headline">Problem:</div><div>
+              <p></p><p>Given a <code>pattern</code> and a string <code>str</code>, find if <code>str</code> follows the same pattern.</p>
+<p> Here <b>follow</b> means a full match, such that there is a bijection between a letter in <code>pattern</code> and a <b>non-empty</b> word in <code>str</code>.</p>
+<p>
+<b>Examples:</b><br>
+<ol>
+<li>pattern = <code>&quot;abba&quot;</code>, str = <code>&quot;dog cat cat dog&quot;</code> should return true.</li>
+<li>pattern = <code>&quot;abba&quot;</code>, str = <code>&quot;dog cat cat fish&quot;</code> should return false.</li>
+<li>pattern = <code>&quot;aaaa&quot;</code>, str = <code>&quot;dog cat cat dog&quot;</code> should return false.</li>
+<li>pattern = <code>&quot;abba&quot;</code>, str = <code>&quot;dog dog dog dog&quot;</code> should return false.</li>
+</ol>
+</p>
+
+<p>
+<b>Notes:</b><br>
+You may assume <code>pattern</code> contains only lowercase letters, and <code>str</code> contains lowercase letters separated by a single space.
+</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://leetcode.com/discuss/user/minglotus6">@minglotus6</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div>
+                  
+                </div>
+              
+
+              
+                <div>
+                  <div id="tags" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+              
+                <div>
+                  <div id="similar" class="btn btn-xs btn-warning"></div>
+                  <span class="hidebutton"></span>
+                </div>
+              
+
+            </div><div class="headline">Solution:</div><div><a id="showSolution" href="#">Show...</a></div><div id="solution"><pre><code class="language-javascript">//
+// https://leetcode.com/problems/word-pattern/
+//
+
+/**
+ * @param {string} pattern
+ * @param {string} str
+ * @return {boolean}
+ */
+var wordPattern = function (pattern, str) {
+  var strArray = str.split(' '), map = {}, reversemap = {};
+  if (pattern.length !== strArray.length) return false;
+  for (var i = 0; i < pattern.length; i++) {
+    var char = pattern.charAt(i), word = strArray[i];
+    if (map[char] !== undefined && map[char] !== word) return false;
+    if (reversemap[word] !== undefined && reversemap[word] !== char) return false;
+    map[char] = word;
+    reversemap[word] = char;
+  }
+  return true;
+};
+
+console.log(wordPattern('abba', 'dog cat cat dog'));</code></pre></div><footer><span style="float: right;"><a href="https://github.com/floydpink" target="_blank">&copy; Floyd Pink</a></span></footer><script type="text/javascript" src="../../cordova.js"></script><script src="../../viewer/prism.js"></script><script src="../../viewer/scripts.js"></script></body></html>
