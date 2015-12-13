@@ -44,7 +44,7 @@ var fs = require('fs'),
               else {
                 next();
                 // save the problem into an array for generating the toc
-                files.push({question : question, path : problemName});
+                files.push({question : question, path : problemName, complexity : question.type === 'Easy' ? 0 : question.type === 'Medium' ? 1 : 2});
               }
             });
 
@@ -77,10 +77,10 @@ fs.readdir(dirPath, function (err, dirs) {
           '<link href="../viewer/styles.css" rel="stylesheet" />' +
           '</head><body><h1>Problems</h1><ol class="problems">';
         tableOfContents += files.sort(function (a, b) {
-          return a.question.id - b.question.id;
+          return a.complexity - b.complexity;
         }).map(function (file) {
           return '<li><a href="./' + file.path + '/index.html">' +
-            file.question.id + ': ' + file.question.title + ' (' + file.question.type + ')' +
+            file.question.title + ' (' + file.question.type.substring(0, 1) + ')' +
             '</a></li>';
         }).join('\n');
         tableOfContents += '</ol>' +
