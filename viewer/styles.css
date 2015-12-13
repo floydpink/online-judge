@@ -4,7 +4,7 @@ body {
 }
 
 .back-button {
-  float: right;
+  float : right;
 }
 
 a, a:visited {
@@ -23,8 +23,12 @@ ol.problems > li > a {
   display : block;
 }
 
-ol.problems > li:nth-child(even) > a {
-  background-color : #eeeeee;
+ol.problems > li:nth-child(even) {
+  background-color : #cccccc;
+}
+
+ol.problems > li:nth-child(even) {
+  background-color : #999999;
 }
 
 #solution {
