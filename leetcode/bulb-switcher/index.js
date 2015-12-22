@@ -23,3 +23,12 @@ var bulbSwitch = function (n) {
 for (var i = 1; i <= 101; i++) {
   console.log(i, ' -> ', bulbSwitch(i));
 }
+
+// ACCEPTED SOLUTION
+///**
+// * @param {number} n
+// * @return {number}
+// */
+//var bulbSwitch = function(n) {
+//  return Math.floor(Math.sqrt(n));
+//};

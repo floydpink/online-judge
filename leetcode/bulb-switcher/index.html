@@ -54,4 +54,17 @@ var bulbSwitch = function (n) {
   return array.reduce(function (prev, curr) {
     return prev + curr;
   }, 0);
-};</code></pre></div><footer><span style="float: right;"><a href="https://github.com/floydpink" target="_blank">&copy; Floyd Pink</a></span></footer><script type="text/javascript" src="../../cordova.js"></script><script src="../../viewer/prism.js"></script><script src="../../viewer/scripts.js"></script></body></html>
+};
+
+for (var i = 1; i <= 101; i++) {
+  console.log(i, ' -> ', bulbSwitch(i));
+}
+
+// ACCEPTED SOLUTION
+///**
+// * @param {number} n
+// * @return {number}
+// */
+//var bulbSwitch = function(n) {
+//  return Math.floor(Math.sqrt(n));
+//};</code></pre></div><footer><span style="float: right;"><a href="https://github.com/floydpink" target="_blank">&copy; Floyd Pink</a></span></footer><script type="text/javascript" src="../../cordova.js"></script><script src="../../viewer/prism.js"></script><script src="../../viewer/scripts.js"></script></body></html>
